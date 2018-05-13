@@ -18,6 +18,26 @@
 ////////////////////////////////////////////////////////////////////////////////
 #if 0
 
+#define FLINT_ARENA_IMPL
+#include "flint_arena.h"
+
+// ...
+
+void * alloc_fn(size_t size)
+{
+    void * ptr = malloc(size);
+    printf("Allocating %10.d %p\n", (int)size, ptr);
+    return ptr;
+}
+
+void free_fn(void * ptr)
+{
+    printf("Freeing block %p\n", ptr);
+    free(ptr);
+}
+
+// ...
+
 FlArena arena;
 fl_arena_init(&arena, alloc_fn, free_fn, 1024 * 1024);
 void * my_ptr_1 = fl_arena_alloc(&arena, 200);
